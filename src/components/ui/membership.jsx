@@ -46,7 +46,7 @@ export default function FeatureCard() {
 
   return (
     <div className="flex items-center justify-center px-4 py-12">
-      <div className="w-full h-full max-w-5xl bg-white rounded-3xl border border-gray-100 p-8 flex flex-col md:flex-row gap-10 items-center">
+      <div className="w-full bg-white rounded-3xl border border-gray-100 p-8 flex flex-col md:flex-row gap-10 items-center">
 
         <div className="relative shrink-0 w-36 h-52">
           <Card c={curr} style={{ transform: 'rotate(3deg) translateX(8px)', zIndex: 1, transition: jumping ? 'transform .5s ease-in, opacity .5s ease-in' : 'none', ...(jumping && { transform: 'rotate(-6deg) translateX(-8px)', opacity: 0.7 }) }} />

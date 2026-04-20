@@ -42,7 +42,7 @@ const Reviews = () => {
   const { lang, color, reviews } = data[cur]
 
   return (
-    <div className='py-16 px-4 text-center bg-white rounded-3xl mx-auto '>
+    <div className='py-16 px-4 text-center bg-white rounded-3xl'>
         <div className='py-16 px-4 text-center'>
         <p className='text-xs uppercase tracking-widest text-gray-400 mb-2'>What our students say</p>
         <h2 className='text-2xl font-semibold text-gray-900 mb-10'>Real results, real people</h2>
