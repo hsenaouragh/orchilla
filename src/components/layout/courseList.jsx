@@ -1,16 +1,21 @@
 import { useState, useMemo } from 'react'
 import CourseCard from '../ui/courseCard'
 
-const ALL_COURSES = [
-  { id: 1, title: 'English Fundamentals',  lang: 'English', type: 'Group courses',              price: 'Free',  level: 'Beginner',     duration: '8 weeks',  students: 1240, color: '#378ADD', price_amount: null,   flag: '🇬🇧' },
-  { id: 2, title: 'French Immersion VIP',  lang: 'French',  type: 'VIP courses',                price: 'Paid',  level: 'Intermediate', duration: '12 weeks', students: 84,   color: '#E85D26', price_amount: '$89',  flag: '🇫🇷' },
-  { id: 3, title: 'Korean Conversation',   lang: 'Korean',  type: 'Conversation class',         price: 'Paid',  level: 'Intermediate', duration: '6 weeks',  students: 320,  color: '#1D9E75', price_amount: '$49',  flag: '🇰🇷' },
-  { id: 4, title: 'Italian Practice Lab',  lang: 'Italian', type: 'Language practice sessions', price: 'Free',  level: 'Advanced',     duration: '4 weeks',  students: 560,  color: '#D4537E', price_amount: null,   flag: '🇮🇹' },
-  { id: 5, title: 'English VIP Coaching',  lang: 'English', type: 'VIP courses',                price: 'Paid',  level: 'Advanced',     duration: '10 weeks', students: 45,   color: '#378ADD', price_amount: '$129', flag: '🇬🇧' },
-  { id: 6, title: 'French Group Class',    lang: 'French',  type: 'Group courses',              price: 'Free',  level: 'Beginner',     duration: '8 weeks',  students: 980,  color: '#E85D26', price_amount: null,   flag: '🇫🇷' },
-  { id: 7, title: 'Korean Practice',       lang: 'Korean',  type: 'Language practice sessions', price: 'Free',  level: 'Beginner',     duration: '4 weeks',  students: 430,  color: '#1D9E75', price_amount: null,   flag: '🇰🇷' },
-  { id: 8, title: 'Italian Conversation',  lang: 'Italian', type: 'Conversation class',         price: 'Paid',  level: 'Intermediate', duration: '6 weeks',  students: 210,  color: '#D4537E', price_amount: '$55',  flag: '🇮🇹' },
-  { id: 9, title: 'French Conversation',   lang: 'French',  type: 'Conversation class',         price: 'Paid',  level: 'Advanced',     duration: '5 weeks',  students: 175,  color: '#E85D26', price_amount: '$59',  flag: '🇫🇷' },
+import French from '../../assets/french.png'
+import English from '../../assets/english.png'
+import Italian from '../../assets/italy.png'
+import Korean from '../../assets/korea.png'
+
+export const ALL_COURSES = [
+  { id: 1, title: 'English Fundamentals',  lang: 'English', type: 'Group courses',              price: 'Free',  level: 'Beginner',     duration: '8 weeks',  students: 1240, color: '#378ADD', price_amount: null,   flag: English },
+  { id: 2, title: 'French Immersion VIP',  lang: 'French',  type: 'VIP courses',                price: 'Paid',  level: 'Intermediate', duration: '12 weeks', students: 84,   color: '#E85D26', price_amount: '$89',  flag: French },
+  { id: 3, title: 'Korean Conversation',   lang: 'Korean',  type: 'Conversation class',         price: 'Paid',  level: 'Intermediate', duration: '6 weeks',  students: 320,  color: '#1D9E75', price_amount: '$49',  flag: Korean },
+  { id: 4, title: 'Italian Practice Lab',  lang: 'Italian', type: 'Language practice sessions', price: 'Free',  level: 'Advanced',     duration: '4 weeks',  students: 560,  color: '#D4537E', price_amount: null,   flag: Italian },
+  { id: 5, title: 'English VIP Coaching',  lang: 'English', type: 'VIP courses',                price: 'Paid',  level: 'Advanced',     duration: '10 weeks', students: 45,   color: '#378ADD', price_amount: '$129', flag: English },
+  { id: 6, title: 'French Group Class',    lang: 'French',  type: 'Group courses',              price: 'Free',  level: 'Beginner',     duration: '8 weeks',  students: 980,  color: '#E85D26', price_amount: null,   flag: French },
+  { id: 7, title: 'Korean Practice',       lang: 'Korean',  type: 'Language practice sessions', price: 'Free',  level: 'Beginner',     duration: '4 weeks',  students: 430,  color: '#1D9E75', price_amount: null,   flag: Korean },
+  { id: 8, title: 'Italian Conversation',  lang: 'Italian', type: 'Conversation class',         price: 'Paid',  level: 'Intermediate', duration: '6 weeks',  students: 210,  color: '#D4537E', price_amount: '$55',  flag: Italian },
+  { id: 9, title: 'French Conversation',   lang: 'French',  type: 'Conversation class',         price: 'Paid',  level: 'Advanced',     duration: '5 weeks',  students: 175,  color: '#E85D26', price_amount: '$59',  flag: French },
 ]
 
 const PER_PAGE = 8

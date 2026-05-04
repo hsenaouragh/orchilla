@@ -12,7 +12,7 @@ import React from 'react'
  *   children : node
  *   className: extra Tailwind classes
  */
-const PlacementTestButton = ({
+const Button = ({
   variant = 'primary',
   size = 'md',
   color,
@@ -80,4 +80,4 @@ const PlacementTestButton = ({
   )
 }
 
-export default PlacementTestButton
+export default Button

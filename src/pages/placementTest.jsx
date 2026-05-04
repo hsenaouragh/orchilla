@@ -1,44 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate , Link} from 'react-router-dom'
+
+import { ALL_COURSES } from '../components/layout/courseList';
+
+import {ThunderboltFill ,TargetDart , ChartColumn , SparklesFill , Puzzle , Clock , Book} from '@gravity-ui/icons';
 
 import CourseCard from '../components/ui/CourseCard'
-import PlacementTestButton from '../components/ui/button'
+import Button from '../components/ui/button'
 
-// ── female student image (put your actual import here) ──────────────────────
 import FemaleStudent from '../assets/online-test.png'
 import MaleStudent   from '../assets/online-test-male.png'
+import French from '../assets/french.png'
+import English from '../assets/english.png'
+import Italian from '../assets/italy.png'
+import Korean from '../assets/korea.png'
 
 // ── language metadata ────────────────────────────────────────────────────────
 const LANGUAGES = [
-  { id: 'english',  label: 'English',  flag: '🇬🇧', color: '#2563EB', accent: '#DBEAFE' },
-  { id: 'french',   label: 'French',   flag: '🇫🇷', color: '#DC2626', accent: '#FEE2E2' },
-  { id: 'italian',  label: 'Italian',  flag: '🇮🇹', color: '#16A34A', accent: '#DCFCE7' },
-  { id: 'korean',   label: 'Korean',   flag: '🇰🇷', color: '#9333EA', accent: '#F3E8FF' },
+  { id: 'english',  label: 'English',  flag: English, color: '#2563EB', accent: '#DBEAFE' },
+  { id: 'french',   label: 'French',   flag: French, color: '#DC2626', accent: '#FEE2E2' },
+  { id: 'italian',  label: 'Italian',  flag: Italian, color: '#16A34A', accent: '#DCFCE7' },
+  { id: 'korean',   label: 'Korean',   flag: Korean, color: '#9333EA', accent: '#F3E8FF' },
 ]
 
-// ── sample courses shown after language is chosen ────────────────────────────
-const SAMPLE_COURSES = {
-  english: [
-    { title: 'English for Beginners', lang: 'English', flag: '🇬🇧', type: 'Group courses', duration: '3 mo', level: 'A1', students: 1240, price: 'Free',    price_amount: 'Free',   color: '#2563EB' },
-    { title: 'Conversational English', lang: 'English', flag: '🇬🇧', type: 'VIP courses',   duration: '2 mo', level: 'B2', students: 620,  price: 'Paid',    price_amount: '$49/mo', color: '#2563EB' },
-    { title: 'Business English',       lang: 'English', flag: '🇬🇧', type: 'Group courses', duration: '4 mo', level: 'C1', students: 430,  price: 'Paid',    price_amount: '$39/mo', color: '#2563EB' },
-  ],
-  french: [
-    { title: 'French Fundamentals',    lang: 'French',  flag: '🇫🇷', type: 'Group courses', duration: '3 mo', level: 'A1', students: 890,  price: 'Free',    price_amount: 'Free',   color: '#DC2626' },
-    { title: 'French Conversation',    lang: 'French',  flag: '🇫🇷', type: 'VIP courses',   duration: '2 mo', level: 'B1', students: 310,  price: 'Paid',    price_amount: '$45/mo', color: '#DC2626' },
-    { title: 'Advanced French',        lang: 'French',  flag: '🇫🇷', type: 'Group courses', duration: '5 mo', level: 'C2', students: 205,  price: 'Paid',    price_amount: '$55/mo', color: '#DC2626' },
-  ],
-  italian: [
-    { title: 'Italian Starter',        lang: 'Italian', flag: '🇮🇹', type: 'Group courses', duration: '2 mo', level: 'A1', students: 560,  price: 'Free',    price_amount: 'Free',   color: '#16A34A' },
-    { title: 'Italian Culture & Talk', lang: 'Italian', flag: '🇮🇹', type: 'VIP courses',   duration: '3 mo', level: 'B1', students: 280,  price: 'Paid',    price_amount: '$42/mo', color: '#16A34A' },
-    { title: 'Italian Proficiency',    lang: 'Italian', flag: '🇮🇹', type: 'Group courses', duration: '4 mo', level: 'C1', students: 140,  price: 'Paid',    price_amount: '$50/mo', color: '#16A34A' },
-  ],
-  korean: [
-    { title: 'Korean from Scratch',    lang: 'Korean',  flag: '🇰🇷', type: 'Group courses', duration: '3 mo', level: 'A1', students: 720,  price: 'Free',    price_amount: 'Free',   color: '#9333EA' },
-    { title: 'K-Drama Korean',         lang: 'Korean',  flag: '🇰🇷', type: 'VIP courses',   duration: '2 mo', level: 'A2', students: 510,  price: 'Paid',    price_amount: '$40/mo', color: '#9333EA' },
-    { title: 'Fluent Korean',          lang: 'Korean',  flag: '🇰🇷', type: 'Group courses', duration: '5 mo', level: 'B2', students: 195,  price: 'Paid',    price_amount: '$52/mo', color: '#9333EA' },
-  ],
-}
 
 // ── tiny animated stat pill ──────────────────────────────────────────────────
 const StatPill = ({ icon, label }) => (
@@ -66,7 +50,7 @@ const LangCard = ({ lang, selected, onSelect }) => (
         style={{ background: lang.color }}
       >✓</span>
     )}
-    <span className='text-3xl'>{lang.flag}</span>
+    <img src={lang.flag} alt={lang.label} className='w-10 h-10 object-contain mb-1'/>
     <span className='text-sm font-semibold text-gray-700'>{lang.label}</span>
   </button>
 )
@@ -77,7 +61,12 @@ const PlacementTest = () => {
   const coursesRef = useRef(null)
 
   const activeLang = LANGUAGES.find(l => l.id === selectedLang)
-  const courses    = selectedLang ? SAMPLE_COURSES[selectedLang] : []
+  const courses = selectedLang
+  ? ALL_COURSES
+      .filter(c => c.lang.toLowerCase() === selectedLang)
+      .sort((a, b) => b.students - a.students) // show most popular
+      .slice(0, 3)
+  : []
 
   const navigate = useNavigate()
 
@@ -88,15 +77,9 @@ const PlacementTest = () => {
       <section
         className='relative overflow-hidden'
         style={{
-          background: 'linear-gradient(135deg, #3B5BDB 0%, #4C6EF5 40%, #7048E8 100%)',
           minHeight: 520,
         }}
       >
-        {/* decorative blobs */}
-        <div className='absolute top-0 left-0 w-72 h-72 rounded-full opacity-20'
-          style={{ background: '#fff', filter: 'blur(80px)', transform: 'translate(-30%, -30%)' }} />
-        <div className='absolute bottom-0 right-0 w-96 h-96 rounded-full opacity-10'
-          style={{ background: '#a78bfa', filter: 'blur(100px)', transform: 'translate(20%, 30%)' }} />
 
         {/* wavy bottom divider */}
         <svg className='absolute bottom-0 left-0 w-full' viewBox='0 0 1440 80' preserveAspectRatio='none' style={{ height: 60 }}>
@@ -109,7 +92,7 @@ const PlacementTest = () => {
           <div className='flex-1 max-w-lg pb-4 md:pb-0'>
             {/* pill badge */}
             <span className='inline-flex items-center gap-1.5 bg-white/20 backdrop-blur text-white text-xs font-semibold px-4 py-1.5 rounded-full mb-5'>
-              <span>⚡</span> Free · Takes only 10 minutes
+              <ThunderboltFill /> Free · Takes only 10 minutes
             </span>
 
             <h1 className='text-white text-4xl md:text-5xl font-extrabold leading-tight mb-4'>
@@ -121,23 +104,24 @@ const PlacementTest = () => {
             </p>
 
             <div className='flex flex-wrap gap-3 mb-8'>
-              <StatPill icon='🎯' label='Adaptive questions' />
-              <StatPill icon='📊' label='Instant results' />
-              <StatPill icon='🏆' label='A1 – C2 coverage' />
+              <StatPill icon={<TargetDart />} label='Adaptive questions' />
+              <StatPill icon={<ChartColumn />} label='Instant results' />
+              <StatPill icon={<SparklesFill />} label='A1 – C2 coverage' />
             </div>
 
             {/* CTA */}
             <div className='flex flex-wrap gap-3'>
-              <PlacementTestButton size='lg' color='#fff'
-                style={{ color: '#3B5BDB', fontWeight: 700 }}
+              <Button size='lg' color='brown'
                 onClick={() => document.getElementById('lang-picker')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Start the test →
-              </PlacementTestButton>
+              </Button>
               
-                <PlacementTestButton variant='outline' size='lg' color='#fff'>
+              <Link to='/courses'>
+                <Button variant='outline' size='lg' color='#fff'>
                   Browse courses
-                </PlacementTestButton>
+                </Button>
+              </Link>
             
             </div>
           </div>
@@ -188,9 +172,9 @@ const PlacementTest = () => {
         {/* start button — appears after picking */}
         {selectedLang && (
           <div className='flex justify-center mt-8'>
-            <PlacementTestButton size='lg' color={activeLang?.color} onClick={() => navigate(`/test?lang=${selectedLang}`)}>
+            <Button size='lg' color={activeLang?.color} onClick={() => navigate(`/test?lang=${selectedLang}`)}>
                 Start {activeLang?.label} test →
-            </PlacementTestButton>
+            </Button>
           </div>
         )}
       </section>
@@ -199,7 +183,6 @@ const PlacementTest = () => {
       {selectedLang && (
         <section ref={coursesRef} className='max-w-6xl mx-auto px-4 py-12'>
           <div className='flex items-center gap-3 mb-2'>
-            <span className='text-2xl'>{activeLang?.flag}</span>
             <p className='text-[#704032] uppercase font-semibold text-xs tracking-widest'>Step 2</p>
           </div>
           <h2 className='text-2xl font-bold text-gray-900 mb-1'>
@@ -223,12 +206,12 @@ const PlacementTest = () => {
           <p className='text-center text-[#704032] uppercase font-semibold text-xs tracking-widest mb-8'>How the test works</p>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-8 text-center'>
             {[
-              { icon: '🧩', title: 'Adaptive questions', desc: 'The test adjusts to your answers, getting harder or easier in real time.' },
-              { icon: '⏱️', title: '~10 minutes',        desc: 'Short, focused, and designed so you can take it anytime, anywhere.' },
-              { icon: '📋', title: 'Instant results',    desc: 'Get your CEFR level (A1–C2) the moment you finish.' },
+              { icon: <Puzzle />, title: 'Adaptive questions', desc: 'The test adjusts to your answers, getting harder or easier in real time.' },
+              { icon: <Clock />, title: '~10 minutes',        desc: 'Short, focused, and designed so you can take it anytime, anywhere.' },
+              { icon: <Book />, title: 'Instant results',    desc: 'Get your CEFR level (A1–C2) the moment you finish.' },
             ].map(({ icon, title, desc }) => (
-              <div key={title}>
-                <div className='text-4xl mb-3'>{icon}</div>
+              <div key={title} className='flex flex-col items-center'>
+                <div className='text-4xl mb-3 text-blue-700'>{icon}</div>
                 <h3 className='font-semibold text-gray-900 mb-2'>{title}</h3>
                 <p className='text-gray-500 text-sm leading-relaxed'>{desc}</p>
               </div>

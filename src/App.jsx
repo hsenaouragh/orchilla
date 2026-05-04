@@ -7,6 +7,7 @@ import Footer from './components/layout/footer'
 
 import { Routes, Route } from 'react-router-dom' 
 import TestPage from './pages/testPage'
+import OfferList from './components/layout/offerList'
 
 
 function App() {

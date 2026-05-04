@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Filter from '../components/ui/filter'
 import CourseList from '../components/layout/courseList'
 import OfferList from '../components/layout/offerList'
+import Form from '../components/ui/form'
 
 const Courses = () => {
   const [filters, setFilters] = useState({})
@@ -22,11 +23,9 @@ const Courses = () => {
 
         {/* Special Offers */}
         <div className='mt-20 pt-12 border-t border-gray-100'>
-          <OfferList showHeading={true} />
+          <OfferList />
         </div>
         
-        
-
       </div>
 
     </>
