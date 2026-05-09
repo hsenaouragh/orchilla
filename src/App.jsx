@@ -8,6 +8,8 @@ import Footer from './components/layout/footer'
 import { Routes, Route } from 'react-router-dom' 
 import TestPage from './pages/testPage'
 import OfferList from './components/layout/offerList'
+import Cart from './pages/cart'
+import Profile from './pages/profile'
 
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
             <Route path='/courses' element={<Courses />} />
             <Route path='/placement-test' element={<PlacementTest />} /> 
             <Route path='/test' element={<TestPage />} />
+            <Route path='/cart' element={<Cart />} />
+            <Route path='profile' element={<Profile />} />
         </Routes>
       <Footer />
     </>

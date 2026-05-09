@@ -43,13 +43,17 @@ const Header = () => {
 
       {/* Profile */}
       <div className='flex items-center gap-4'>
-        <button>
-          <ShoppingCart className='text-amber-600 size-6'/>
-        </button>
+        <Link to={'/cart'}>
+          <button>
+            <ShoppingCart className='text-amber-600 size-6'/>
+          </button>
+        </Link>
 
-        <button>
-          <Person className='text-amber-600 size-6'/>
-        </button>
+        <Link to={'/profile'}>
+          <button>
+            <Person className='text-amber-600 size-6'/>
+          </button>
+        </Link>
       </div>
 
     </div>
